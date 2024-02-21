@@ -5,3 +5,19 @@ body {
 p {
   font-family: verdana;
 }
+
+nav {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+nav a {
+  color: white;
+  font-family: verdana;
+}
+
+.logo {
+  width: 1rem;
+  height: 1rem;
+}
