@@ -1,67 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
-
-function Home({products}){
-  return(
-    <div>
-      <h3>All Products</h3>
-      <ul>
-        {
-          products.map( product => {
-            return (
-              <li key={product.id}>
-                {product.title}
-              </li>
-            )
-          })
-        }
-      </ul>
-    </div>
-  )
-}
-
-function Electronics({products}){
-  return(
-    <div>
-      <h3>Explore Electronics!</h3>
-      <ul>
-        {
-          products.map( product => {
-            return (
-              <li key={product.id}>
-                {product.category}
-              </li>
-            )
-          })
-        }
-      </ul>
-    </div>
-  )
-}
-
-function Jewelry(){
-  return(
-    <div>
-      <h3>jewelry</h3>
-    </div>
-  )
-}
-
-function MensClothing(){
-  return(
-    <div>
-      <h3>men </h3>
-    </div>
-  )
-}
-
-function WomensClothing(){
-  return(
-    <div>
-      <h3>women</h3>
-    </div>
-  )
-}
+import { Link, Route, Routes, useParams } from 'react-router-dom'
+import Home from './components/Home'
+import Electronics from './components/Electronics'
+import Jewelry from './components/Jewelry'
+import MensClothing from './components/Mens'
+import WomensClothing from './components/Womens'
+import Product from './components/product'
 
 function App() {
   const [ products, setProducts] = useState([])
@@ -89,6 +33,10 @@ function App() {
         <Route
         path='/'
         element = { <Home products= { products }/> }
+        />
+         <Route
+        path='/Products/:id'
+        element = { <Product products= { products }/> }
         />
         <Route
         path='/electronics'

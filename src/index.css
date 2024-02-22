@@ -1,23 +1,47 @@
 body {
-  background-color: rgb(251, 206, 213);
+  background-color: whitesmoke;
 }
 
 p {
   font-family: verdana;
 }
 
+h1 {
+  color: black;
+}
+
 nav {
-  padding: 0.5rem;
+  background-color: lightblue;
+  padding: 2rem;
   display: flex;
   justify-content: space-around;
+
 }
 
 nav a {
   color: white;
-  font-family: verdana;
 }
 
-.logo {
-  width: 1rem;
-  height: 1rem;
+nav a:hover {
+  color: white;
+  font-family: verdana;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+img {
+  width: 50%;
+
+}
+
+button {
+  transition-duration: 0.4s;
+  background-color: white;
+  color: black;
+  border: 2px solid lightblue;
+}
+
+button:hover {
+  background-color: rgb(132, 211, 237);
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
