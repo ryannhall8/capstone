@@ -16,7 +16,7 @@ function Home(){
       </form>
       <form>
         <input 
-        placeholder="email"/>
+        placeholder="Email"/>
         <input
         placeholder="Password" />
         <button>Register</button>
