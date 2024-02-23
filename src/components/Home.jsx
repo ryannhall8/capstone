@@ -1,24 +1,22 @@
-import { Link, useParams, useLocation } from 'react-router-dom'
-
-
-function Home({products}){
+function Home(){
+  const submit = ev => {
+    ev.preventDefault();
+    console.log('login');
+  };
     return(
       <div>
-        <h3>All Products</h3>
-        <ul>
-          {
-            products.map( (product)=> {
-              return (
-                <li key={ product.id }>
-                  <h4>{ product.title }</h4>
-                  <Link to={`/products/${product.id}`}>
-                  <button>View Details</button>
-                  </Link>
-                </li>
-              )
-            })
-          }
-        </ul>
+        <h3>Add Login / Register</h3>
+
+        <form onSubmit= { submit }>
+        <input />
+        <input />
+        <button>Login</button>
+      </form>
+      <form>
+        <input />
+        <input />
+        <button>Register</button>
+      </form>
       </div>
     )
   }

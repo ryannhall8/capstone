@@ -45,3 +45,15 @@ button:hover {
   color: white;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  border: solid 1px black;
+  margin: 2rem;
+
+}
+
+form > * {
+  margin: 1rem;
+}
