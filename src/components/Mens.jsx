@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link} from 'react-router-dom'
 
 
 function MensClothing(){
@@ -21,7 +22,9 @@ function MensClothing(){
                 <li key={product.id}>
                   <img src= {product.image} />
                   <h2>{product.title}</h2>
+                  <Link to={`/products/${product.id}`}>
                   <button>View Item</button>
+                  </Link>
                 </li>
               )
             })
