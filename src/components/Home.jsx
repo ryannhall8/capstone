@@ -1,20 +1,24 @@
 function Home(){
   const submit = ev => {
     ev.preventDefault();
-    console.log('login');
+    submit({ email, password });
   };
     return(
       <div>
         <h3>Add Login / Register</h3>
 
         <form onSubmit= { submit }>
-        <input />
-        <input />
+        <input
+        placeholder="Email" />
+        <input
+        placeholder="Password" />
         <button>Login</button>
       </form>
       <form>
-        <input />
-        <input />
+        <input 
+        placeholder="email"/>
+        <input
+        placeholder="Password" />
         <button>Register</button>
       </form>
       </div>

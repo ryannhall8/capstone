@@ -6,10 +6,6 @@ p {
   font-family: verdana;
 }
 
-h1 {
-  color: black;
-}
-
 nav {
   background-color: lightblue;
   padding: 2rem;
@@ -29,7 +25,8 @@ nav a:hover {
 }
 
 img {
-  width: 50%;
+  width: 30%;
+  margin: 1rem;
 
 }
 
@@ -38,6 +35,7 @@ button {
   background-color: white;
   color: black;
   border: 2px solid lightblue;
+  margin: 1rem;
 }
 
 button:hover {
@@ -56,4 +54,10 @@ form {
 
 form > * {
   margin: 1rem;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  margin: 2rem;
 }
