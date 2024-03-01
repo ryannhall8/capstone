@@ -22,10 +22,10 @@ function WomensClothing(){
               return (
                 <li key={product.id}>
                   <img src= {product.image} />
-                  <h2>{product.title}</h2>
                   <Link to={`/products/${product.id}`}>
-                  <button>View Item</button>
+                  <h4>{product.title}</h4>
                   </Link>
+                  <button>Add to Cart</button>
                 </li>
               )
             })

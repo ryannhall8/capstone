@@ -6,6 +6,10 @@ h1 {
   text-decoration: dotted underline lightblue;
 }
 
+h4 {
+  color: black;
+}
+
 p {
   font-family: verdana;
 }
