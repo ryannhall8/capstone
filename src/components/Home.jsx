@@ -1,26 +1,46 @@
+import { useState, useEffect } from 'react'
+import Login from './Login';
+import Register from './Register'
+
 function Home(){
-  const submit = ev => {
-    ev.preventDefault();
-    submit({ email, password });
+  const [auth, setAuth] = useState({});
+
+  const token = localStorage.getItem('token');
+
+  const login = async({ username, password })=> {
+    const response = await fetch('https://fakestoreapi.com/users');
+    const users = await response.json();
+    const user = users.find(user => user.username === username && user.password === password);
+    if(!user){
+      throw 'Incorrect username/password';
+    }
+    setAuth(user);
   };
+
+  const logout = ()=> {
+    window.localStorage.removeItem('token');
+    setAuth({});
+  }
+
+  const register = async({ username, password })=> {
+    const response = await fetch('https://fakestoreapi.com/users');
+    const users = await response.json();
+    const user = users.find(user => user.username === username && user.password === password);
+    if(!user){
+      throw 'Registration successful!! Now use login form to login!';
+    }
+    setAuth(user);
+  };
+
     return(
       <div>
-        <h3>Add Login / Register</h3>
-
-        <form onSubmit= { submit }>
-        <input
-        placeholder="Email" />
-        <input
-        placeholder="Password" />
-        <button>Login</button>
-      </form>
-      <form>
-        <input 
-        placeholder="Email"/>
-        <input
-        placeholder="Password" />
-        <button>Register</button>
-      </form>
+        <h3>Login / Register</h3>
+        <>
+      {
+        auth.id ? <button onClick={ logout }>Welcome { auth.username }!! (click to logout)</button> : <><Login  login={ login }/>
+        <Register  register={ register }/></>
+      }
+      </>
       </div>
     )
   }

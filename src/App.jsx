@@ -7,11 +7,11 @@ import Jewelry from './components/Jewelry'
 import MensClothing from './components/Mens'
 import WomensClothing from './components/Womens'
 import Product from './components/product'
-//import Login from './components/login'
-//import Register from './components/register'
+//import Login from './components/Login'
 
 function App() {
-  const [ products, setProducts] = useState([])
+  const [ products, setProducts] = useState([]);
+
   useEffect(() => {
     const fetchProducts = async ()=> {
     const response = await fetch('https://fakestoreapi.com/products')
@@ -31,8 +31,10 @@ function App() {
         <Link to='/jewelry'>Jewelry </Link>
         <Link to='/mensClothing'>Men's Clothing </Link>
         <Link to='/womensClothing'>Women's Clothing </Link>
-
       </nav>
+      
+      <input id='search' placeholder='🔎 Search Products '/>
+
       <Routes>
         <Route
         path='/'

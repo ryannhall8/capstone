@@ -2,12 +2,16 @@ body {
   background-color: whitesmoke;
 }
 
+h1 {
+  text-decoration: dotted underline lightblue;
+}
+
 p {
   font-family: verdana;
 }
 
 nav {
-  background-color: lightblue;
+  background-color: rgb(171, 216, 231);
   padding: 2rem;
   display: flex;
   justify-content: space-around;
@@ -39,7 +43,7 @@ button {
 }
 
 button:hover {
-  background-color: rgb(132, 211, 237);
+  background-color: lightgray;
   color: white;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
@@ -60,4 +64,9 @@ li {
   display: flex;
   align-items: center;
   margin: 2rem;
+}
+
+#search {
+  margin: 0.5rem;
+  width: 25%;
 }
