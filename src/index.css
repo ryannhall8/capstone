@@ -57,7 +57,7 @@ form {
   flex-direction: column;
   border: solid 1px black;
   margin: 2rem;
-
+  width: 75%;
 }
 
 form > * {

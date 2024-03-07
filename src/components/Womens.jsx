@@ -3,7 +3,9 @@ import { Link} from 'react-router-dom'
 
 
 function WomensClothing(){
-  const [ products, setProducts] = useState([])
+  const [ products, setProducts] = useState([]);
+  const [key, Setkey] = useState(0);
+
   useEffect(() => {
     const fetchProducts = async ()=> {
     const response = await fetch("https://fakestoreapi.com/products/category/women's%20clothing");
@@ -13,9 +15,27 @@ function WomensClothing(){
     fetchProducts()
   }, []);
 
+  function sortProducts() {
+    const sortedProducts = products.sort(compare) 
+    console.log(products,sortedProducts)
+    setProducts(sortedProducts)
+    Setkey(prevKey => prevKey + 1);
+  }
+    
+
+  function compare(a, b) {
+    if (a?.title < b?.title) {
+      return -1;
+    } else if (a?.title > b?.title) {
+      return 1;
+    }
+    return 0;
+  }
+
     return(
       <div>
         <h3>Shop Women's Clothing!</h3>
+        <button onClick={sortProducts}>Sort by A-Z</button>
         <ul>
           {
             products.map( product => {
