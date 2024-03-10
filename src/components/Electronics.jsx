@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link} from 'react-router-dom'
-//import Sort from './Sort'
+import addToCart from './AddToCart';
 
 
 function Electronics(){
@@ -19,11 +19,15 @@ function Electronics(){
 
   function sortProducts() {
     const sortedProducts = products.sort(compare) 
-    console.log(products,sortedProducts)
     setProducts(sortedProducts)
     Setkey(prevKey => prevKey + 1);
   }
-    
+
+    function sortProductsz() {
+    const sortingProducts = products.sort(compareZ) 
+    setProducts(sortingProducts)
+    Setkey(prevKey => prevKey + 1);
+  }
 
   function compare(a, b) {
     if (a?.title < b?.title) {
@@ -34,12 +38,56 @@ function Electronics(){
     return 0;
   }
 
-  
+  function compareZ(a, b) {
+    if (a?.title < b?.title) {
+      return 1;
+    } else if (a?.title > b?.title) {
+      return -1;
+    }
+    return 0;
+  }
+
+  function priceSort(a, b) {
+    if (a?.price < b?.price) {
+      return -1;
+    } else if (a?.price > b?.price) {
+      return 1;
+    }
+    return 0;
+  }
+
+  function priceSortB(a, b) {
+    if (a?.price < b?.price) {
+      return 1;
+    } else if (a?.price > b?.price) {
+      return -1;
+    }
+    return 0;
+  }
+
+  function applyPriceSort() {
+    const filterProducts = products.sort(priceSort) 
+    setProducts(filterProducts)
+    Setkey(prevKey => prevKey + 1);
+
+  }
+
+  function applyPriceSortB() {
+    const filterProducts = products.sort(priceSortB) 
+    setProducts(filterProducts)
+    Setkey(prevKey => prevKey + 1);
+
+  }
+
+
     return(
       <div>
         <h3>Explore Electronics!</h3>
-        {/* <Sort products = { products }/> */}
         <button onClick={sortProducts}>Sort by A-Z</button>
+        <button onClick={sortProductsz}>Sort by Z-A</button>
+        <span>Price:</span>
+        <button onClick={() => applyPriceSort(products)}>Sort by low to high</button>
+        <button onClick={() => applyPriceSortB(products)}>Sort by high to low</button>
         <ul>
           {
             products.map( product => {
@@ -49,7 +97,8 @@ function Electronics(){
                   <Link to={`/products/${product.id}`}>
                   <h4>{product.title}</h4>
                   </Link>
-                  <button>Add to Cart</button>
+                  <h5>${product.price}</h5>
+                  <button onClick={() => addToCart(product.id)}>Add to Cart</button>
                 </li>
               )
             })

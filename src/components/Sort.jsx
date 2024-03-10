@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
-function Sort(props){
-    
-    return(
-        <h3>{props.products && props.products[0]?.title}</h3>
-        //console.log(props.products[0])
-
-    )
-}
-
-export default Sort;
+function singleProduct (productId){
+    useEffect(() => {
+        const response = fetch(`https://fakestoreapi.com/products/${productId}`)
+        console.log('hi', productId)
+        const json = response.json();
+        return json;
+        }
+      , [])}
+;
+export default singleProduct;
