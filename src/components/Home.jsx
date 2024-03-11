@@ -8,7 +8,7 @@ function Home(){
   const [carts, setCarts] = useState([]);
   const [products, setProducts] = useState([]);
 
-  const token = localStorage.getItem('token');
+  const token = JSON.parse(localStorage.getItem('token'));
 
   const login = async ({ username, password }) => {
     try {
@@ -30,9 +30,9 @@ function Home(){
       const result = await response.json();
       console.log('Login result:', result);
   
-      localStorage.setItem('token', result.token);
-  
-      setAuth(result.user);
+      localStorage.setItem('token', JSON.stringify(result.token));
+
+      setAuth(result.token);
     } catch (error) {
       console.error('Login error:', error);
       throw error;
