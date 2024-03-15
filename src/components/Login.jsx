@@ -4,6 +4,7 @@ function Login({ login }) {
     const [username, setUsername] = useState('johnd');
     const [password, setPassword] = useState('m38rmF$');
     const [error, setError] = useState('');
+    
     const submit =async (ev) => {
         ev.preventDefault();
         try{
@@ -28,7 +29,7 @@ function Login({ login }) {
         value={ password } type='password' onChange={ ev => setPassword(ev.target.value)}
         placeholder='Password'
         />
-        <button>Login</button>
+        <button type="submit">Login</button>
       </form>
     )
 }

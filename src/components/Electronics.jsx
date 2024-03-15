@@ -6,6 +6,8 @@ import addToCart from './AddToCart';
 function Electronics(){
   const [ products, setProducts] = useState([]);
   const [key, Setkey] = useState(0);
+  // console.log(localStorage.token);
+
 
   useEffect(() => {
     const fetchProducts = async ()=> {

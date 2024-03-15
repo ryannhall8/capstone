@@ -28,3 +28,25 @@ const addToCart = async (productId, auth, token, carts, setCarts) => {
 };
 
   export default addToCart;
+
+//   const addToCart = async (productId) => {
+//     const response = await fetch(`https://fakestoreapi.com/carts/user/${auth.id}`);
+//     const cartData = await response.json();
+  
+//     const updatedCartData = {
+//       ...cartData,
+//       products: [...cartData.products, { productId, quantity: 1 }],
+//     };
+  
+//     await fetch(`https://fakestoreapi.com/carts/${updatedCartData.id}`, {
+//       method: 'PUT',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(updatedCartData),
+//     });
+  
+//     // Update local storage
+//     localStorage.setItem('carts', JSON.stringify([updatedCartData]));
+//   };
+  
