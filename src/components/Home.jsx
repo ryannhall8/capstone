@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import Login from './Login';
 import Register from './Register'
+import CheckoutForm from './checkoutForm';
+import Electronics from './Electronics';
 //import addToCart from './AddToCart';
 
 function Home(){
-  const [auth, setAuth] = useState({});
+  const [auth, setAuth] = useState(null);
   const [carts, setCarts] = useState([]);
   const [products, setProducts] = useState([]);
 
@@ -24,14 +26,18 @@ function Home(){
             userCart(user.id);
           } else {
             localStorage.removeItem('token');
-            setAuth({});
+            setAuth(null);
           }
         } catch (error) {
+          console.error('Failed to fetch user data:', error);
         }
       };
       fetchData();
+    } else {
+      setAuth(null);
     }
   }, []);
+
   
   const login = async ({ username, password }) => {
     try {
@@ -137,23 +143,37 @@ function Home(){
     setCarts(updatedCarts);
   };
 
+  async function checkout() {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+  
+      setCarts([]);
+      alert('Checkout successful');
+    } catch (error) {
+      console.error('Error checking out:', error);
+      alert('Failed to checkout');
+    }
+  };
+
     return(
       <div>
         <h3>Login / Register</h3>
         <>
       {
-         auth && auth.id ? (
+        auth && auth.id ? (
           <button onClick={logout}>Welcome {auth.username}!! (click to logout)</button>
-        ) : (
-          <>
+          ) : (
+            <>
             <Login login={login} />
             <Register register={register} />
+            <Electronics auth={auth} />
           </>
         )
       }
           {auth && auth.id && (
             <ul>
-              <h2>Your Cart</h2>
+              <h2>Shopping Cart</h2>
+              {/* <h3>your have {products.length} products in your cart</h3> */}
                 {carts.length > 0 && carts.map((cart, index) => (
                 <li key={cart.id}>
                   <ul>
@@ -169,7 +189,6 @@ function Home(){
                             <a>Quantity: {product.quantity}</a>
                             <button onClick={() => addQuantity(cart.id, product.productId)}>+</button>
                             <button onClick={() => minusQuantity(cart.id, product.productId)}>-</button>
-                            {/* Add to cart button */}
                           </>
                         )}
                       </li>
@@ -179,6 +198,7 @@ function Home(){
               ))}
             </ul>
           )}
+          <CheckoutForm onCheckout={checkout} />
       </>
     </div>
   );

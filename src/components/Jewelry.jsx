@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link} from 'react-router-dom'
 
-
 function Jewelry(){
   const [ products, setProducts] = useState([]);
   const [key, Setkey] = useState(0);
@@ -26,8 +25,6 @@ function Jewelry(){
     setProducts(sortingProducts)
     Setkey(prevKey => prevKey + 1);
   }
-
-    
 
   function compare(a, b) {
     if (a?.title < b?.title) {

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link} from 'react-router-dom'
 
-
 function AllProducts({ products, category }){
     const [selectedCategory, setSelectedCategory] = useState(null);
     const filteredProducts = category ? products.filter(product => product.category === category) : products;
@@ -9,6 +8,7 @@ function AllProducts({ products, category }){
     const handleFilterByCategory = (category) => {
       setSelectedCategory(category);
     }
+    
     return(
       <div>
         <h3>All Products</h3>
@@ -24,8 +24,8 @@ function AllProducts({ products, category }){
             filteredProducts.map(( product )=> {
               return (
                 <li key={ product.id }>
-                  <h4>{ product.title }</h4>
                   <img src= {product.image} />
+                  <h4>{ product.title }</h4>
                   <Link to={`/products/${product.id}`}>
                   <button>View Details</button>
                   </Link>

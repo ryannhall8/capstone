@@ -1,52 +1,63 @@
-const addToCart = async (productId, auth, token, carts, setCarts) => {
-    try {
-        if (!auth.id) {
-            throw ('User is not authenticated');
-        }
+// const addToCart = async (productId) => {
+//         const response = await fetch(`https://fakestoreapi.com/carts/user/${auth.id}`);
+//         const cartData = await response.json();
+      
+//         const updatedCartData = {
+//           ...cartData,
+//           products: [...cartData.products, { productId, quantity: 1 }],
+//         };
+      
+//         await fetch(`https://fakestoreapi.com/carts/${updatedCartData.id}`, {
+//           method: 'PUT',
+//           headers: {
+//             'Content-Type': 'application/json',
+//           },
+//           body: JSON.stringify(updatedCartData),
+//         });
+      
+//         // Update local storage
+//         localStorage.setItem('carts', JSON.stringify([updatedCartData]));
+//       };
 
-        const response = await fetch(`https://fakestoreapi.com/carts/${auth.id}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-                productId: productId,
-                quantity: 1,
-            }),
-        });
-
-        if (!response.ok) {
-            throw ('Failed to add product to cart');
-        }
-
-        const newCart = await response.json();
-        setCarts([...carts, newCart]);
-    } catch (error) {
-        console.error('Add to cart error:', error);
-    }
-};
-
-  export default addToCart;
-
-//   const addToCart = async (productId) => {
-//     const response = await fetch(`https://fakestoreapi.com/carts/user/${auth.id}`);
-//     const cartData = await response.json();
-  
-//     const updatedCartData = {
-//       ...cartData,
-//       products: [...cartData.products, { productId, quantity: 1 }],
-//     };
-  
-//     await fetch(`https://fakestoreapi.com/carts/${updatedCartData.id}`, {
+// const addToCart = async (productId) => {
+//     const updatedCart = [...userCart, { productId, quantity: 1 }];
+//     const response = await fetch('https://fakestoreapi.com/carts/user/1', {
 //       method: 'PUT',
 //       headers: {
 //         'Content-Type': 'application/json',
 //       },
-//       body: JSON.stringify(updatedCartData),
+//       body: JSON.stringify({ products: updatedCart }),
 //     });
-  
-//     // Update local storage
-//     localStorage.setItem('carts', JSON.stringify([updatedCartData]));
+//     if (response.ok) {
+//       setUserCart(updatedCart);
+//     } else {
+//       console.error('Failed to add product to cart');
+//     }
 //   };
+
+const addToCart = async (productId) => {
+    try {
+      const response = await fetch(`https://fakestoreapi.com/carts/user/${auth.id}`);
+      const cartData = await response.json();
   
+      const updatedCartData = {
+        ...cartData,
+        products: [...cartData.products, { productId, quantity: 1 }],
+      };
+  
+      await fetch(`https://fakestoreapi.com/carts/${auth.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedCartData),
+      });
+  
+      localStorage.setItem(`cart_${auth.id}`, JSON.stringify(updatedCartData));
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+    }
+  };
+  
+
+  export default addToCart;

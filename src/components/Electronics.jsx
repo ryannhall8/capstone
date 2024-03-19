@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Link} from 'react-router-dom'
-import addToCart from './AddToCart';
+//import addToCart from './AddToCart';
 
 
-function Electronics(){
+function Electronics({auth, carts, setCarts}){
   const [ products, setProducts] = useState([]);
   const [key, Setkey] = useState(0);
-  // console.log(localStorage.token);
-
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async ()=> {
@@ -16,9 +15,41 @@ function Electronics(){
     setProducts(json);
     }
     fetchProducts()
+  }, []);
 
-  }, [])
+  async function addToCart(product) {
+    setCart(prevCart => {
+      const updatedCart = [...prevCart, product];
+      console.log('Updated Cart:', updatedCart);
+      return updatedCart;
+    });
+  }
 
+  // async function addToCart(productId) {
+  //   try {
+  //     const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
+  //     const product = await response.json();
+  //     setCart(prevCart => [...prevCart, product]);
+  //   } catch (error) {
+  //     console.error('Error adding item to cart:', error);
+  //   }
+  // }
+
+  // const addToCart = (productId) => {
+  //   const updatedCarts = carts.map((cart) => {
+  //     if (cart.userId === auth.id) {
+  //       const existingProduct = cart.products.find((product) => product.productId === productId);
+  //       if (existingProduct) {
+  //         existingProduct.quantity += 1;
+  //       } else {
+  //         cart.products.push({ productId, quantity: 1 });
+  //       }
+  //     }
+  //     return cart;
+  //   });
+  //     setCarts(updatedCarts);
+  // };
+   
   function sortProducts() {
     const sortedProducts = products.sort(compare) 
     setProducts(sortedProducts)
@@ -81,8 +112,7 @@ function Electronics(){
 
   }
 
-
-    return(
+  return(
       <div>
         <h3>Explore Electronics!</h3>
         <button onClick={sortProducts}>Sort by A-Z</button>
