@@ -33,7 +33,7 @@ function App() {
         <Link to='/womensClothing'>Women's Clothing </Link>
       </nav>
             
-      <input id='search' placeholder='🔎 Search Products '/>
+      {/* <input id='search' placeholder='🔎 Search Products '/> */}
 
       <Routes>
         <Route

@@ -5,6 +5,8 @@ import { Link} from 'react-router-dom'
 function MensClothing(){
   const [ products, setProducts] = useState([]);
   const [key, Setkey] = useState(0);
+  const [cart, setCart] = useState([]);
+
 
   useEffect(() => {
     const fetchProducts = async ()=> {
@@ -14,6 +16,47 @@ function MensClothing(){
     }
     fetchProducts()
   }, [])
+
+  const addToCart = async (productId) => {
+    try {
+      console.log('Adding product to cart. Product ID:', productId);
+      const banana = localStorage.getItem('banana');
+      if (!banana) {
+        console.error('User not logged in');
+        return;
+      }
+  
+      // Fetch the current cart data
+      const response = await fetch(`https://fakestoreapi.com/carts/${banana}`);
+      const cartData = await response.json();
+      console.log('Current cart data:', cartData);
+  
+      // Update the cart data with the new product
+      const updatedProducts = Array.isArray(cartData.products) ? cartData.products : [];
+      const updatedCartData = {
+        ...cartData,
+        products: [...updatedProducts, { productId, quantity: 1 }],
+      };
+  
+      // Update the cart data on the server
+      await fetch(`https://fakestoreapi.com/carts/${banana}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedCartData),
+      });
+  
+      // Update the cart state and local storage
+      setCart(updatedCartData.products);
+      localStorage.setItem(`cart_${banana}`, JSON.stringify(updatedCartData));
+  
+      console.log('Product added to cart successfully.');
+      alert('Product added to cart successfully.');
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+    }
+  };
 
   function sortProducts() {
     const sortedProducts = products.sort(compare) 
@@ -98,7 +141,7 @@ function MensClothing(){
                   <h4>{product.title}</h4>
                   </Link>
                   <h5>${product.price}</h5>
-                  <button>Add to Cart</button>
+                  <button onClick={() => addToCart(product.id)}>Add to Cart</button>
                 </li>
               )
             })

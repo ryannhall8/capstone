@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Login from './Login';
 import Register from './Register'
 import CheckoutForm from './checkoutForm';
-import Electronics from './Electronics';
+// import Electronics from './Electronics';
 //import addToCart from './AddToCart';
 
 function Home(){
@@ -67,6 +67,8 @@ function Home(){
       });
       if (userResponse.ok) {
         const user = await userResponse.json();
+        localStorage.setItem('auth', user)
+        localStorage.setItem('banana', user.id)
         setAuth(user);
         userCart(user.id);
       }
@@ -83,17 +85,24 @@ function Home(){
   const userCart = async (authId) => {
     try {
       const response = await fetch(`https://fakestoreapi.com/carts/user/${authId}`);
-      const carts = await response.json();
-      localStorage.setItem('carts', JSON.stringify(carts));
-      setCarts(carts);
+      const cartsData = await response.json();
+  
+      setCarts(cartsData);
       
-      const productIds = carts.flatMap(cart => cart.products.map(product => product.productId));
+      const productIds = cartsData.flatMap(cart => cart.products.map(product => product.productId));
       const productsData = await Promise.all(productIds.map(productId => fetchProduct(productId)));
       setProducts(productsData);
     } catch (error) {
+      console.error('Error fetching cart data:', error);
     }
   };
-
+  
+  useEffect(() => {
+    if (auth && auth.id) {
+      localStorage.setItem(`cart_${auth.id}`, JSON.stringify(carts));
+    }
+  }, [carts, auth]);
+  
     async function fetchProduct(productId){
       const response = await fetch(`https://fakestoreapi.com/products/${productId}`)
       const json = await response.json();
@@ -111,47 +120,69 @@ function Home(){
       
     };
     
-  const addQuantity = (cartId, productId) => {
-    const updatedCarts = carts.map((cart) => {
-      if (cart.id === cartId) {
-        const updatedProducts = cart.products.map((product) => {
-          if (product.productId === productId) {
-            return { ...product, quantity: product.quantity + 1 };
-          }
-          return product;
-        });
-        return { ...cart, products: updatedProducts };
-      }
-      return cart;
-    });
-    setCarts(updatedCarts);
-  };
-  
-  const minusQuantity = (cartId, productId) => {
-    const updatedCarts = carts.map((cart) => {
-      if (cart.id === cartId) {
-        const updatedProducts = cart.products.map((product) => {
-          if (product.productId === productId && product.quantity > 0) {
-            return { ...product, quantity: product.quantity - 1 };
-          }
-          return product;
-        });
-        return { ...cart, products: updatedProducts };
-      }
-      return cart;
-    });
-    setCarts(updatedCarts);
-  };
-
+    const addQuantity = (cartId, productId) => {
+      const updatedCarts = carts.map((cart) => {
+        if (cart.id === cartId) {
+          const updatedProducts = cart.products.map((product) => {
+            if (product.productId === productId) {
+              return { ...product, quantity: product.quantity + 1 };
+            }
+            return product;
+          });
+          return { ...cart, products: updatedProducts };
+        }
+        return cart;
+      });
+      setCarts(updatedCarts);
+    };
+    
+    const minusQuantity = (cartId, productId) => {
+      const updatedCarts = carts.map((cart) => {
+        if (cart.id === cartId) {
+          const updatedProducts = cart.products.map((product) => {
+            if (product.productId === productId && product.quantity > 0) {
+              return { ...product, quantity: product.quantity - 1 };
+            }
+            return product;
+          });
+          return { ...cart, products: updatedProducts };
+        }
+        return cart;
+      });
+      setCarts(updatedCarts);
+    };
+    
   async function checkout() {
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // await new Promise(resolve => setTimeout(resolve, 2000));
   
       setCarts([]);
       alert('Checkout successful');
     } catch (error) {
       console.error('Error checking out:', error);
       alert('Failed to checkout');
+    }
+  };
+
+  const removeFromCart = async (cartId, productId) => {
+    try {
+      const response = await fetch(`https://fakestoreapi.com/carts/${auth.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId: productId,
+        }),
+      });
+  
+      if (response.ok) {
+        console.log('Product removed from cart successfully.');
+      } else {
+        console.error('Failed to remove product from cart.');
+      }
+    } catch (error) {
+      console.error('Error removing product from cart:', error);
     }
   };
 
@@ -166,8 +197,8 @@ function Home(){
             <>
             <Login login={login} />
             <Register register={register} />
-            <Electronics auth={auth} />
-          </>
+            {/* <Electronics auth={auth} carts={carts} setCarts={setCarts} /> */}
+\          </>
         )
       }
           {auth && auth.id && (
@@ -189,6 +220,7 @@ function Home(){
                             <a>Quantity: {product.quantity}</a>
                             <button onClick={() => addQuantity(cart.id, product.productId)}>+</button>
                             <button onClick={() => minusQuantity(cart.id, product.productId)}>-</button>
+                            <button onClick={() => removeFromCart(product.cartId, product.productId)}>X</button>
                           </>
                         )}
                       </li>

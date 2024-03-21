@@ -3,7 +3,7 @@ import { Link} from 'react-router-dom'
 //import addToCart from './AddToCart';
 
 
-function Electronics({auth, carts, setCarts}){
+function Electronics(){
   const [ products, setProducts] = useState([]);
   const [key, Setkey] = useState(0);
   const [cart, setCart] = useState([]);
@@ -17,38 +17,46 @@ function Electronics({auth, carts, setCarts}){
     fetchProducts()
   }, []);
 
-  async function addToCart(product) {
-    setCart(prevCart => {
-      const updatedCart = [...prevCart, product];
-      console.log('Updated Cart:', updatedCart);
-      return updatedCart;
-    });
-  }
-
-  // async function addToCart(productId) {
-  //   try {
-  //     const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
-  //     const product = await response.json();
-  //     setCart(prevCart => [...prevCart, product]);
-  //   } catch (error) {
-  //     console.error('Error adding item to cart:', error);
-  //   }
-  // }
-
-  // const addToCart = (productId) => {
-  //   const updatedCarts = carts.map((cart) => {
-  //     if (cart.userId === auth.id) {
-  //       const existingProduct = cart.products.find((product) => product.productId === productId);
-  //       if (existingProduct) {
-  //         existingProduct.quantity += 1;
-  //       } else {
-  //         cart.products.push({ productId, quantity: 1 });
-  //       }
-  //     }
-  //     return cart;
-  //   });
-  //     setCarts(updatedCarts);
-  // };
+  const addToCart = async (productId) => {
+    try {
+      console.log('Adding product to cart. Product ID:', productId);
+      const banana = localStorage.getItem('banana');
+      if (!banana) {
+        console.error('User not logged in');
+        return;
+      }
+  
+      // Fetch the current cart data
+      const response = await fetch(`https://fakestoreapi.com/carts/${banana}`);
+      const cartData = await response.json();
+      console.log('Current cart data:', cartData);
+  
+      // Update the cart data with the new product
+      const updatedProducts = Array.isArray(cartData.products) ? cartData.products : [];
+      const updatedCartData = {
+        ...cartData,
+        products: [...updatedProducts, { productId, quantity: 1 }],
+      };
+  
+      // Update the cart data on the server
+      await fetch(`https://fakestoreapi.com/carts/${banana}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedCartData),
+      });
+  
+      // Update the cart state and local storage
+      setCart(updatedCartData.products);
+      localStorage.setItem(`cart_${banana}`, JSON.stringify(updatedCartData));
+  
+      console.log('Product added to cart successfully.');
+      alert('Product added to cart successfully.');
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+    }
+  };
    
   function sortProducts() {
     const sortedProducts = products.sort(compare) 
