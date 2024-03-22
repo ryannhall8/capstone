@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react'
 import Login from './Login';
 import Register from './Register'
 import CheckoutForm from './checkoutForm';
-// import Electronics from './Electronics';
-//import addToCart from './AddToCart';
 
 function Home(){
   const [auth, setAuth] = useState({});
@@ -87,18 +85,12 @@ function Home(){
       //old cart
       const response = await fetch(`https://fakestoreapi.com/carts/user/${authId}`);
       const cartsData = await response.json();
-      console.log('cartsdata', cartsData)
-      console.log('local Storage', JSON.parse(localStorage.getItem(`cart_${authId}`)))
-      // If we have the updated cart data in local storage, show that; otherwise, show the old cart data
       if (!JSON.parse(localStorage.getItem(`cart_${authId}`))) {
-        console.log(cartsData)
         setCarts(cartsData);
-        console.log('if', cartsData);
       } else {
         // Updated cart in the else
         const updatedCartData = JSON.parse(localStorage.getItem(`cart_${authId}`));
         setCarts(updatedCartData); 
-        console.log('else: updated cart', updatedCartData);
       }
 
       //if we have the updated cart show that otherwise show old cart data
@@ -106,7 +98,6 @@ function Home(){
       const productIds = cartsData.flatMap(cart => cart.products.map(product => product.productId));
       const productsData = await fetch('https://fakestoreapi.com/products')
       const data = await productsData.json();
-      // const productsData = await Promise.all(productIds.map(productId => fetchProduct(productId)));
       setProducts(data);
     } catch (error) {
       console.error('Error fetching cart data:', error);
@@ -118,12 +109,6 @@ function Home(){
     }
   }, [carts, auth]);
   
-    async function fetchProduct(productId){
-      const response = await fetch(`https://fakestoreapi.com/products/${productId}`)
-      const json = await response.json();
-      return json;
-    }
-    
     const register = async({ username, password })=> {
       const response = await fetch('https://fakestoreapi.com/users');
       const users = await response.json();
@@ -177,28 +162,17 @@ function Home(){
     }
   };
 
-  const removeFromCart = async (cartId, productId) => {
-    try {
-      const response = await fetch(`https://fakestoreapi.com/carts/${auth.id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          productId: productId,
-        }),
-      });
-  
-      if (response.ok) {
-        console.log('Product removed from cart successfully.');
-      } else {
-        console.error('Failed to remove product from cart.');
+  const removeFromCart = (cartId, productId) => {
+    const updatedCarts = carts.map((cart) => {
+      if (cart.id === cartId) {
+        const updatedProducts = cart.products.filter((product) => product.productId !== productId);
+        return { ...cart, products: updatedProducts };
       }
-    } catch (error) {
-      console.error('Error removing product from cart:', error);
-    }
+      return cart;
+    });
+    setCarts(updatedCarts);
   };
-  console.log(carts)
+  
     return(
       <div>
         <h3>Login / Register</h3>
@@ -218,8 +192,8 @@ function Home(){
             <ul>
               <h2>Shopping Cart</h2>
               {/* <h3>your have {products.length} products in your cart</h3> */}
-                {carts.length > 0 && carts.map((cart, index) => (
-                <li key={cart.id}>
+                {carts.length > 0 && carts.map((cart) => (
+                  <li key={cart.id}>
                   <ul>
                     {cart.products.map((product, productIndex) => (
                       <li key={productIndex}>
@@ -233,7 +207,7 @@ function Home(){
                             <a>Quantity: {product.quantity}</a>
                             <button onClick={() => addQuantity(cart.id, product.productId)}>+</button>
                             <button onClick={() => minusQuantity(cart.id, product.productId)}>-</button>
-                            <button onClick={() => removeFromCart(product.cartId, product.productId)}>X</button>
+                            <button onClick={() => removeFromCart(cart.id, product.productId)}>X</button>
                           </>
                         )}
                       </li>
@@ -241,9 +215,9 @@ function Home(){
                   </ul>
                 </li>
               ))}
+              <CheckoutForm onCheckout={checkout} />
             </ul>
           )}
-          <CheckoutForm onCheckout={checkout} />
       </>
     </div>
   );

@@ -19,7 +19,6 @@ function MensClothing(){
 
   const addToCart = async (productId) => {
     try {
-      console.log('Adding product to cart. Product ID:', productId);
       const banana = JSON.parse(localStorage.getItem('banana'));
       if (!banana) {
         console.error('User not logged in');
@@ -27,7 +26,6 @@ function MensClothing(){
       }
         const response = await fetch(`https://fakestoreapi.com/carts/user/${banana}`);
       const cartData = await response.json();
-      console.log('Current cart data:', cartData);
   
       if(Array.isArray(cartData[0].products)){
         cartData[0].products = [...cartData[0].products, { productId, quantity: 1 }]
@@ -47,13 +45,12 @@ function MensClothing(){
       setCart(updatedCartData.products);
       localStorage.setItem(`cart_${banana}`, JSON.stringify(updatedCartData));
   
-      console.log('Product added to cart successfully.');
       alert('Product added to cart successfully.');
     } catch (error) {
       console.error('Error adding product to cart:', error);
     }
   };
-  
+
   function sortProducts() {
     const sortedProducts = products.sort(compare) 
     setProducts(sortedProducts)

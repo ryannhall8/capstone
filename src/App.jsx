@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div>
-      <h1>Welcome! ! !</h1>
+      <h1>Glamor and Gadgets</h1>
       <nav>
         <Link to='/'>Home</Link>
         <Link to='/AllProducts'>All Products</Link>
