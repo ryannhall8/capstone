@@ -3,7 +3,8 @@ body {
 }
 
 h1 {
-  text-decoration: dotted underline lightblue;
+  color: #0a3803;
+  font-weight: 100;
 }
 
 h4 {
@@ -23,19 +24,18 @@ p {
 }
 
 nav {
-  background-color: rgb(171, 216, 231);
-  padding: 2rem;
+  /* background-color: rgb(171, 216, 231); */
   display: flex;
   justify-content: space-around;
 
 }
 
 nav a {
-  color: white;
+  color: rgb(14, 48, 5);
 }
 
 nav a:hover {
-  color: white;
+  color: rgb(14, 48, 5);
   font-family: verdana;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
@@ -50,14 +50,8 @@ button {
   transition-duration: 0.4s;
   background-color: white;
   color: black;
-  border: 2px solid lightblue;
+  border: 2px solid rgb(14, 48, 5);
   margin: 1rem;
-}
-
-button:hover {
-  background-color: lightgray;
-  color: white;
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 form {
@@ -65,7 +59,7 @@ form {
   flex-direction: column;
   border: solid 1px black;
   margin: 2rem;
-  width: 75%;
+  width: 50%;
 }
 
 form > * {
@@ -81,4 +75,28 @@ li {
 #search {
   margin: 0.5rem;
   width: 25%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(209, 226, 192);
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.home {
+  background-image: url('https://www.looklet.com/hubfs/Looklet%20innovation%20slide%20July%203rd-1.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
 }

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Link, Route, Routes, useParams } from 'react-router-dom'
+import { Link, Route, Routes } from 'react-router-dom'
 import AllProducts from './components/AllProducts'
-import Home from './components/Home'
+import Account from './components/Account'
 import Electronics from './components/Electronics'
 import Jewelry from './components/Jewelry'
 import MensClothing from './components/Mens'
 import WomensClothing from './components/Womens'
 import Product from './components/product'
-//import Login from './components/Login'
+import Home from './components/Home'
 
 function App() {
   const [ products, setProducts] = useState([]);
@@ -22,8 +22,10 @@ function App() {
   }, [])
 
   return (
-    <div>
-      <h1>Glamor and Gadgets</h1>
+    <div className={location.pathname === '/' ? 'home-background' : ''}>
+      <div className="header">
+        <h1>Glamor and Gadgets</h1>
+      </div>
       <nav>
         <Link to='/'>Home</Link>
         <Link to='/AllProducts'>All Products</Link>
@@ -32,9 +34,10 @@ function App() {
         <Link to='/mensClothing'>Men's Clothing </Link>
         <Link to='/womensClothing'>Women's Clothing </Link>
       </nav>
+      <nav>
+        <Link to='/Account'>Account</Link>
+      </nav>
             
-      {/* <input id='search' placeholder='🔎 Search Products '/> */}
-
       <Routes>
         <Route
         path='/'
@@ -63,6 +66,10 @@ function App() {
         <Route
         path='/womensClothing'
         element = { <WomensClothing products= { products }/> }
+        />
+        <Route
+        path='/Account'
+        element = { <Account products= { products }/> }
         />
       </Routes>
     </div>

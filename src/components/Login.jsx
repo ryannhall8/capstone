@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 function Login({ login }) {
-    const [username, setUsername] = useState('johnd');
-    const [password, setPassword] = useState('m38rmF$');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     
     const submit =async (ev) => {
