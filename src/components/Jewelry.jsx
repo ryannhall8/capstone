@@ -19,25 +19,22 @@ function Jewelry(){
   const addToCart = async (productId) => {
     try {
       console.log('Adding product to cart. Product ID:', productId);
-      const banana = localStorage.getItem('banana');
+      const banana = JSON.parse(localStorage.getItem('banana'));
       if (!banana) {
         console.error('User not logged in');
         return;
       }
-  
-      // Fetch the current cart data
-      const response = await fetch(`https://fakestoreapi.com/carts/${banana}`);
+        const response = await fetch(`https://fakestoreapi.com/carts/user/${banana}`);
       const cartData = await response.json();
       console.log('Current cart data:', cartData);
   
-      // Update the cart data with the new product
-      const updatedProducts = Array.isArray(cartData.products) ? cartData.products : [];
-      const updatedCartData = {
-        ...cartData,
-        products: [...updatedProducts, { productId, quantity: 1 }],
-      };
+      if(Array.isArray(cartData[0].products)){
+        cartData[0].products = [...cartData[0].products, { productId, quantity: 1 }]
+      }
+      const updatedCartData = [
+        ...cartData
+      ];
   
-      // Update the cart data on the server
       await fetch(`https://fakestoreapi.com/carts/${banana}`, {
         method: 'PUT',
         headers: {
@@ -46,7 +43,6 @@ function Jewelry(){
         body: JSON.stringify(updatedCartData),
       });
   
-      // Update the cart state and local storage
       setCart(updatedCartData.products);
       localStorage.setItem(`cart_${banana}`, JSON.stringify(updatedCartData));
   
@@ -56,7 +52,7 @@ function Jewelry(){
       console.error('Error adding product to cart:', error);
     }
   };
-
+  
   function sortProducts() {
     const sortedProducts = products.sort(compare) 
     setProducts(sortedProducts)

@@ -6,7 +6,7 @@ import CheckoutForm from './checkoutForm';
 //import addToCart from './AddToCart';
 
 function Home(){
-  const [auth, setAuth] = useState(null);
+  const [auth, setAuth] = useState({});
   const [carts, setCarts] = useState([]);
   const [products, setProducts] = useState([]);
 
@@ -67,8 +67,8 @@ function Home(){
       });
       if (userResponse.ok) {
         const user = await userResponse.json();
-        localStorage.setItem('auth', user)
-        localStorage.setItem('banana', user.id)
+        localStorage.setItem('auth', JSON.stringify(user))
+        localStorage.setItem('banana', JSON.stringify(user.id))
         setAuth(user);
         userCart(user.id);
       }
@@ -84,14 +84,30 @@ function Home(){
   
   const userCart = async (authId) => {
     try {
+      //old cart
       const response = await fetch(`https://fakestoreapi.com/carts/user/${authId}`);
       const cartsData = await response.json();
-  
-      setCarts(cartsData);
-      
+      console.log('cartsdata', cartsData)
+      console.log('local Storage', JSON.parse(localStorage.getItem(`cart_${authId}`)))
+      // If we have the updated cart data in local storage, show that; otherwise, show the old cart data
+      if (!JSON.parse(localStorage.getItem(`cart_${authId}`))) {
+        console.log(cartsData)
+        setCarts(cartsData);
+        console.log('if', cartsData);
+      } else {
+        // Updated cart in the else
+        const updatedCartData = JSON.parse(localStorage.getItem(`cart_${authId}`));
+        setCarts(updatedCartData); 
+        console.log('else: updated cart', updatedCartData);
+      }
+
+      //if we have the updated cart show that otherwise show old cart data
+              
       const productIds = cartsData.flatMap(cart => cart.products.map(product => product.productId));
-      const productsData = await Promise.all(productIds.map(productId => fetchProduct(productId)));
-      setProducts(productsData);
+      const productsData = await fetch('https://fakestoreapi.com/products')
+      const data = await productsData.json();
+      // const productsData = await Promise.all(productIds.map(productId => fetchProduct(productId)));
+      setProducts(data);
     } catch (error) {
       console.error('Error fetching cart data:', error);
     }
@@ -99,7 +115,6 @@ function Home(){
   
   useEffect(() => {
     if (auth && auth.id) {
-      localStorage.setItem(`cart_${auth.id}`, JSON.stringify(carts));
     }
   }, [carts, auth]);
   
@@ -153,9 +168,7 @@ function Home(){
     };
     
   async function checkout() {
-    try {
-      // await new Promise(resolve => setTimeout(resolve, 2000));
-  
+    try {  
       setCarts([]);
       alert('Checkout successful');
     } catch (error) {
@@ -185,7 +198,7 @@ function Home(){
       console.error('Error removing product from cart:', error);
     }
   };
-
+  console.log(carts)
     return(
       <div>
         <h3>Login / Register</h3>
@@ -210,13 +223,13 @@ function Home(){
                   <ul>
                     {cart.products.map((product, productIndex) => (
                       <li key={productIndex}>
-                        {products.length > 0 && products[index * cart.products.length + productIndex] && (
+                        {products.length > 0 && products.find((originalProduct) => product.productId === originalProduct.id) && (
                           <>
                             <img
-                              src={products[index * cart.products.length + productIndex].image}
-                              alt={products[index * cart.products.length + productIndex].title}
+                              src={products.find((originalProduct) => product.productId === originalProduct.id).image}
+                              alt={products.find((originalProduct) => product.productId === originalProduct.id).title}
                             />
-                            <a>{products[index * cart.products.length + productIndex].title}</a>
+                            <a>{products.find((originalProduct) => product.productId === originalProduct.id).title}</a>
                             <a>Quantity: {product.quantity}</a>
                             <button onClick={() => addQuantity(cart.id, product.productId)}>+</button>
                             <button onClick={() => minusQuantity(cart.id, product.productId)}>-</button>
