@@ -113,7 +113,7 @@ function Electronics(){
 
   return(
       <div>
-        <h3>Explore Electronics!</h3>
+        <h2>Explore Electronics!</h2>
         <button onClick={sortProducts}>Sort by A-Z</button>
         <button onClick={sortProductsz}>Sort by Z-A</button>
         <span>Price:</span>

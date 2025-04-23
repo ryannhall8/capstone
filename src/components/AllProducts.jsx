@@ -36,7 +36,7 @@ function AllProducts({ products }) {
 
   return (
     <div>
-      <h3>All Products</h3>
+      <h2>All Products</h2>
       <div>
         Filter by category:
         {categories.map((category) => (

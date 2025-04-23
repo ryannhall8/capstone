@@ -22,7 +22,7 @@ function App() {
   }, [])
 
   return (
-    <div className={location.pathname === '/' ? 'home-background' : ''}>
+    <div className={location.pathname === '/' ? 'home-background' : '"hello world!'}>
       <div className="header">
         <h1>Glamor and Gadgets</h1>
       </div>

@@ -116,7 +116,7 @@ function Jewelry(){
 
     return(
       <div>
-        <h3>Browse Jewelry!</h3>
+        <h2>Browse Jewelry!</h2>
         <button onClick={sortProducts}>Sort by A-Z</button>
         <button onClick={sortProductsz}>Sort by Z-A</button>
         <span>Price:</span>

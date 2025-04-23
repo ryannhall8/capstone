@@ -118,7 +118,7 @@ function MensClothing(){
 
     return(
       <div>
-        <h3>Shop Men's Clothing! </h3>
+        <h2>Shop Men's Clothing! </h2>
         <button onClick={sortProducts}>Sort by A-Z</button>
         <button onClick={sortProductsz}>Sort by Z-A</button>
         <span>Price:</span>

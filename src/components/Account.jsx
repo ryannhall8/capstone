@@ -176,7 +176,7 @@ function Account(){
   
     return(
       <div>
-        <h3>Login / Register</h3>
+        <h2>Login / Register</h2>
         <>
       {
         auth && auth.id ? (
