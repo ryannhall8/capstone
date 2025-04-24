@@ -26,6 +26,7 @@ a {
 
 p {
   font-family: verdana;
+  color: #7a9576;
 }
 
 nav {
@@ -53,8 +54,8 @@ img {
 
 button {
   transition-duration: 0.4s;
-  background-color: white;
-  color: black;
+  background-color: #7a9576;
+  color: white;
   border: 2px solid rgb(14, 48, 5);
   margin: 1rem;
 }
@@ -108,11 +109,11 @@ li {
   color: #fff;
 }
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .home {
     background-size: contain;
     background-position: center center;
     height: 100vh;
     padding: 0;
   }
-}
+} */
