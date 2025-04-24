@@ -1,5 +1,6 @@
 body {
-  background-color: rgb(207, 214, 208);
+  /* background-color: #e4eee6; */
+  background-color: #cfd6d0;
 }
 
 h1 {
@@ -47,8 +48,7 @@ nav a:hover {
 }
 
 img {
-  width: 15%;
-  margin: 1rem;
+  width: 20%;
 
 }
 
@@ -108,12 +108,3 @@ li {
   text-align: center;
   color: #fff;
 }
-
-/* @media screen and (max-width: 768px) {
-  .home {
-    background-size: contain;
-    background-position: center center;
-    height: 100vh;
-    padding: 0;
-  }
-} */

@@ -3,9 +3,7 @@ function home(){
         <div className="home">
             <h1>30% OFF</h1>
             <p>Site-Wide</p>
-            <button>use code: GAG30</button>
-            {/* <h1>30% OFF</h1>
-            <h2>Site-Wide</h2> */}
+            <button>USE CODE: GAG30</button>
         </div>
     )
 }
