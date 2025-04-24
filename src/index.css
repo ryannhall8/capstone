@@ -1,5 +1,4 @@
 body {
-  /* background-color: #e4eee6; */
   background-color: #cfd6d0;
 }
 
@@ -10,7 +9,6 @@ h1 {
 
 h2 {
   color: #7a9576;
-  /* font-weight: 100; */
 }
 
 h4 {
@@ -28,6 +26,22 @@ a {
 p {
   font-family: verdana;
   color: #7a9576;
+}
+
+.account-top-right {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+}
+
+.account-top-right a {
+  color: #7a9576;
+  transition: color 0.3s;
+}
+
+.account-top-right a:hover {
+  color: rgb(14, 48, 5);
 }
 
 nav {
@@ -88,7 +102,7 @@ li {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* background-color: rgb(209, 226, 192); */
+  border-bottom: 2px solid #7a9576;
 }
 
 .title {

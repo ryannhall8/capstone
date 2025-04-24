@@ -8,6 +8,8 @@ import MensClothing from './components/Mens'
 import WomensClothing from './components/Womens'
 import Product from './components/product'
 import Home from './components/Home'
+import { FaUser } from 'react-icons/fa';
+
 
 function App() {
   const [ products, setProducts] = useState([]);
@@ -22,7 +24,12 @@ function App() {
   }, [])
 
   return (
-    <div className={location.pathname === '/' ? 'home-background' : '"hello world!'}>
+    <div className={location.pathname === '/' ? 'home-background' : 'hello world!'}>
+    <div className="account-top-right">
+        <Link to="/account">
+        <FaUser size={24} />
+        </Link>
+    </div>
       <div className="header">
         <h1>Glamor and Gadgets</h1>
       </div>
@@ -34,9 +41,9 @@ function App() {
         <Link to='/mensClothing'>Men's Clothing </Link>
         <Link to='/womensClothing'>Women's Clothing </Link>
       </nav>
-      <nav>
+      {/* <nav>
         <Link to='/Account'>Account</Link>
-      </nav>
+      </nav> */}
             
       <Routes>
         <Route
